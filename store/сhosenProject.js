@@ -17,7 +17,7 @@ export const actions = {
   async fetch({commit}) {
     const response = await this.$axios.$get('http://help.support.rusneb.dev.infospice.ru/api/kb.questions@popular/')
     popularReaders = response.data.popular_questions
-    commit('setUsers', popularReaders)
+    commit('setPopularReaders', popularReaders)
   }
 }
 

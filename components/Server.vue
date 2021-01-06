@@ -154,7 +154,7 @@ export default {
       "http://help.support.rusneb.dev.infospice.ru/api/kb.projects/"
     );
     this.projects = responseProjects.data.projects;
-    console.log(this.projects);
+    // console.log(this.projects);
 
     // let responseChosenReaders = await this.$axios.$get(
     //   "http://help.support.rusneb.dev.infospice.ru/api/kb.sections@сhosenProject/"
@@ -166,13 +166,13 @@ export default {
       "http://help.support.rusneb.dev.infospice.ru/api/kb.questions@popular/"
     );
     this.popularReaders = responsePopularReaders.data.popular_questions;
-    console.log(this.popularReaders);
+    // console.log(this.popularReaders);
 
-    let responseInSection = await this.$axios.$get(
-      "http://help.support.rusneb.dev.infospice.ru/api/kb.questionSectionsList/1/"
-    );
-    this.inSection = responseInSection.data;
-    console.log(this.inSection);
+    // let responseInSection = await this.$axios.$get(
+    //   "http://help.support.rusneb.dev.infospice.ru/api/kb.questionSectionsList/1/"
+    // );
+    // this.inSection = responseInSection.data;
+    // console.log(this.inSection);
   },
 };
 </script>

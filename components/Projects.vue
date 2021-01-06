@@ -126,13 +126,13 @@ export default {
       "http://help.support.rusneb.dev.infospice.ru/api/kb/sections/map/{section_id}"
     );
     this.categories = responseCategories.data;
-    console.log(this.categories);
+    // console.log(this.categories);
 
     let responsePopularReaders = await this.$axios.$get(
       "http://help.support.rusneb.dev.infospice.ru/api/kb.questions@popular/"
     );
     this.popularReaders = responsePopularReaders.data.popular_questions;
-    console.log(this.popularReaders);
+    // console.log(this.popularReaders);
   },
 };
 </script>
