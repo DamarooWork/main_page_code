@@ -4,50 +4,110 @@
       <div>
         <h4>Проекты</h4>
         <div>
-          <div v-for="item in projects" :key="item.id">
-            <div
-              style="
-                float: left;
-                display: inline;
-                width: 500px;
-                margin: 0 0 10px 0;
-              "
-            >
-              <div class="cube" style="float: left"></div>
-              <span style="margin-left: 10px">
+          <div v-for="item in projects" :key="item.id" class="project">
+            <div style="padding: 20px 0 0 20px">
+              <span style="font-size: 22px">
                 {{ item.name }}
               </span>
             </div>
+
+            <p style="font-size: 20px; padding-left: 20px; cursor: pointer">
+              &rarr; Подробнее
+            </p>
           </div>
+          <div v-show="!projects">К сожалению тут пока ничего нет!</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="help">
+      <div>
+        <h4 style="margin-bottom: 40px">Поддержка rusneb.ru</h4>
+
+        <h5>Читателям</h5>
+        <div>
+          <div v-for="item in chosenReaders" :key="item.id" class="project">
+            <div style="padding: 20px 0 0 20px">
+              <span style="font-size: 22px">
+                {{ item.name }}
+              </span>
+            </div>
+
+            <p style="font-size: 20px; padding-left: 20px; cursor: pointer">
+              &rarr; Подробнее
+            </p>
+          </div>
+          <div v-show="!chosenReaders">К сожалению тут пока ничего нет!</div>
+        </div>
+
+        <h5 style="margin-top: 40px">Библиотекам</h5>
+        <div>
+          <div v-for="item in chosenLibraries" :key="item.id" class="project">
+            <div style="padding: 20px 0 0 20px">
+              <span style="font-size: 22px">
+                {{ item.name }}
+              </span>
+            </div>
+
+            <p style="font-size: 20px; padding-left: 20px; cursor: pointer">
+              &rarr; Подробнее
+            </p>
+          </div>
+          <div v-show="!chosenLibraries">К сожалению тут пока ничего нет!</div>
         </div>
       </div>
     </section>
     <section class="popular-questions">
       <div>
         <h4>Популярные вопросы</h4>
-        <span> Читателям </span>
-        <span> Библиотекам </span>
-        <ul v-for="item in popular" :key="item.id" style="margin-top: 20px">
-          <li>
+        <span
+          v-bind:class="{ active: activePopular }"
+          v-on:click="activePopular = true"
+          style="cursor: pointer; font-size: 22px; margin-right: 10px"
+        >
+          Читателям
+        </span>
+        <span
+          v-bind:class="{ active: !activePopular }"
+          v-on:click="activePopular = false"
+          style="cursor: pointer; font-size: 22px"
+        >
+          Библиотекам </span
+        ><br />
+        <ul
+          v-show="activePopular"
+          v-for="item in popularReaders"
+          :key="item.id"
+          class="project"
+        >
+          <li style="list-style-type: none; font-size: 22px">
             {{ item.question }}
           </li>
+          <p style="font-size: 18px; cursor: pointer">&rarr; Подробнее</p>
         </ul>
+        <ul
+          v-show="!activePopular"
+          v-for="item in popularLibraries"
+          :key="item.id"
+          class="project"
+        >
+          <li style="list-style-type: none; font-size: 22px">
+            {{ item.question }}
+          </li>
+          <p style="font-size: 18px; cursor: pointer">&rarr; Подробнее</p>
+        </ul>
+        <div v-show="!popularReaders && activePopular">
+          К сожалению тут пока ничего нет!
+        </div>
+        <div v-show="!popularLibraries && !activePopular">
+          К сожалению тут пока ничего нет!
+        </div>
       </div>
     </section>
-    <section class="help">
-      <div>
-        <h4 style="margin-bottom: 40px">Поддержка rusneb.ru</h4>
-
-        <h5>Читателям</h5>
-
-        <h5>Библиотекам</h5>
-      </div>
-    </section>
-
     <section class="ask-question">
       <div>
         <h4 class="center">
-          Не нашли ответа на свой вопрос? Задайте его сейчас
+          Не нашли ответа на свой вопрос? Задайте его сейчас.
         </h4>
         <div class="buttons-center">
           <span>
@@ -70,84 +130,81 @@
 export default {
   data() {
     return {
-      projects: [],
-      popular: [],
+      projects: null,
+      chosenReaders: null,
+      chosenLibraries: null,
+      popularReaders: null,
+      popularLibraries: null,
+      inSection: null,
+      activePopular: true,
     };
   },
   async mounted() {
-    let response = await this.$axios.$get(
+    let responseProjects = await this.$axios.$get(
       "http://help.support.rusneb.dev.infospice.ru/api/kb.projects/"
     );
-    this.projects = response.data.projects;
+    this.projects = responseProjects.data.projects;
     console.log(this.projects);
 
-    let responsePopular = await this.$axios.$get(
+    // let responseChosenReaders = await this.$axios.$get(
+    //   "http://help.support.rusneb.dev.infospice.ru/api/kb.sections@сhosenProject/"
+    // );
+    // this.chosenReaders = responseChosenReaders;
+    // console.log(this.chosenReaders);
+
+    let responsePopularReaders = await this.$axios.$get(
       "http://help.support.rusneb.dev.infospice.ru/api/kb.questions@popular/"
     );
-    this.popular = responsePopular.data.popular_questions;
-    console.log(this.popular);
+    this.popularReaders = responsePopularReaders.data.popular_questions;
+    console.log(this.popularReaders);
+
+    let responseInSection = await this.$axios.$get(
+      "http://help.support.rusneb.dev.infospice.ru/api/kb.questionSectionsList/1/"
+    );
+    this.inSection = responseInSection.data;
+    console.log(this.inSection);
   },
 };
 </script>
 
 <style scoped>
 .server {
-  left: 0px;
-  top: 0px;
   width: 1236px;
-  height: 200px;
   margin: 0 auto;
 }
 .projects {
-  float: left;
-  border-width: 1px;
-  border-style: solid;
+  background-color: #fff;
 
-  width: 650px;
-  height: 220px;
-  display: flex;
+  width: 1238px;
+  height: 450px;
   padding-top: 20px;
-  padding-left: 20px;
-  margin-bottom: 20px;
-  border-color: rgba(215, 215, 215, 1);
+  padding-left: 40px;
 }
 .help {
-  float: left;
-  border-width: 1px;
-  border-style: solid;
+  background-color: #fff;
 
-  width: 650px;
-  height: 452px;
-  display: flex;
+  width: 1238px;
+  height: 400px;
+
   padding-top: 20px;
-  padding-left: 20px;
-  margin-bottom: 20px;
-  border-color: rgba(215, 215, 215, 1);
+  padding-left: 40px;
 }
 .popular-questions {
-  float: right;
-  border-width: 1px;
-  border-style: solid;
+  background-color: #fff;
 
-  width: 560px;
-  height: 692px;
-  display: flex;
+  width: 1238px;
+  height: 400px;
   padding-top: 20px;
-  padding-left: 20px;
-  margin-left: 20px;
-  border-color: rgba(215, 215, 215, 1);
+  padding-left: 40px;
 }
 .ask-question {
-  float: left;
-  border-width: 1px;
-  border-style: solid;
+  background-color: #fff;
+
   width: 1238px;
   height: 170px;
-  display: flex;
+
   padding-top: 20px;
-  padding-left: 20px;
-  margin-bottom: 50px;
-  border-color: rgba(215, 215, 215, 1);
+  padding-left: 40px;
 }
 .center {
   text-align: center;
@@ -155,17 +212,20 @@ export default {
   width: 1238px;
 }
 .buttons-center {
-  width: 1238px;
   margin: 10px 0 0 400px;
-  float: left;
-  display: block;
+  display: inline-block;
 }
-.cube {
-  width: 34px;
-  height: 34px;
-  background-color: rgba(170, 170, 170, 0.588235294117647);
+.project {
+  position: relative;
+  vertical-align: middle;
+  display: inline-block;
+  height: 150px;
+  width: 300px;
+  margin: 10px 10px 10px 0;
+  border: 1px solid rgba(215, 215, 215, 1);
+  border-radius: 10px;
 }
-li {
-  list-style-type: circle;
+.active {
+  font-weight: bold;
 }
 </style>

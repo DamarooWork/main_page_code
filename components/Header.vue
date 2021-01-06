@@ -2,54 +2,65 @@
   <div class="header">
     <div style="display: inline">
       <p>
-        <b>Logotype</b>
+        <img class="img" src="~assets/u533.svg" />
+      </p>
+      <p>
+        <b style="font-size: 22px">Logotype</b>
       </p>
 
-      <p style="margin: 0 0 0 200px">
+      <p style="margin: 0 0 0 180px">
         <span>Проекты НЭБ</span>
       </p>
       <p>
-        <img
-          class="img"
-          src="https://d1icd6shlvmxi6.cloudfront.net/gsc/4SZWW8/ed/7f/95/ed7f9560f03044b09797b6aea075124a/images/main/u51.svg?token=75b3f695c688b60f0035c5d52c5963e0c48af993f2e767c7a6dcdc406a602b9a"
-        />
+        <img class="img" src="~assets/u51.svg" style="cursor: pointer" />
       </p>
       <p style="margin: 0 0 0 20px">
         <span>Обратная связь</span>
       </p>
-      <p style="margin: 0 0 0 350px">
+      <p style="margin: 0 0 0 150px">
         <img
           class="img"
-          src="https://d1icd6shlvmxi6.cloudfront.net/gsc/4SZWW8/ed/7f/95/ed7f9560f03044b09797b6aea075124a/images/main/u271.svg?token=d44a224659bfa485dafd7ddc3fe5582baca3e8c5f70753cc5e25e063acf26b22"
+          src="~assets/u271.svg"
           tabindex="0"
-          style="outline: none"
+          style="outline: none; cursor: pointer"
         />
       </p>
       <p>
         <span>Войти</span>
       </p>
       <p style="margin: 0 0 0 20px">
-        <img
-          class="img"
-          src="https://d1icd6shlvmxi6.cloudfront.net/gsc/4SZWW8/ed/7f/95/ed7f9560f03044b09797b6aea075124a/images/main/u519.svg?token=193047784f3530db97b036ddc948705433e3ba0762d9bddd86fa20f9ca7efd4d"
-          alt=""
-        />
+        <img class="img" src="~assets/u519.svg" alt="" />
       </p>
       <p>
         <span> ВЕРСИЯ ДЛЯ СЛАБОВИДЯЩИХ </span>
       </p>
-      <p style="display: block; margin: 0; width: 200px">
+      <p style="font-size: 22px; margin: 0 0 0 40px">
+        <span  v-on:click="active = !active" style="cursor: pointer">Меню</span>
+        <span  v-on:click="active = !active" style="cursor: pointer">
+          &equiv;
+        </span>
+        <div class="menu" v-show="active">
+          <nuxt-link to="/"><p style="display: block; color: black;" v-on:click="active = !active">Главная</p></nuxt-link>
+          <nuxt-link to="/project"> <p style="display: block; color: black;" v-on:click="active = !active">Проекты</p> </nuxt-link>
+        </div>
+
+      <p style="display: block; margin: 0 0 0 45px; width: 200px">
         <span>Центр поддержки</span>
       </p>
 
-      <p />
     </div>
-    <hr />
+
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      active: false,
+    };
+  },
+};
 </script>
 
 <style scoped>
@@ -57,13 +68,29 @@ p {
   display: inline;
 }
 .header {
+background-color: #fff;
   left: 0px;
   top: 0px;
   width: 1236px;
-  height: 78px;
-  margin: 40px auto;
+  height: 120px;
+  padding: 40px 10px 0 10px;
+  margin: 0 auto 0;
 }
 .header-margin {
   margin: 0 0 0 100px;
+}
+.menu {
+
+  border: 2px solid rgba(215, 215, 215, 1);;
+  border-radius: 0 0 10px 10px;
+  font-weight: bold;
+  padding: 13px 0 0 13px;
+  height: 100px;
+  width: 100px;
+  background-color: white;
+  color: black;
+  float: right;
+
+  z-index: 2;
 }
 </style>

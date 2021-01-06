@@ -1,9 +1,20 @@
 <template>
-  <div></div>
+  <div>
+    <Input />
+    <Server />
+  </div>
 </template>
 
 <script>
-export default {};
+import Input from "@/components/Input";
+import Server from "@/components/Server";
+
+export default {
+  components: {
+    Input,
+    Server,
+  },
+};
 </script>
 
 <style>

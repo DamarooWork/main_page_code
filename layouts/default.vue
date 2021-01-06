@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="main">
     <Header />
-    <Input />
-    <Server />
-    <Footer />
-    <Nuxt />
+    <main>
+      <div><Nuxt /></div>
+    </main>
+     <Footer />
   </div>
 </template>
 
@@ -13,15 +13,12 @@
 
 <script>
 import Header from "@/components/Header";
-import Input from "@/components/Input";
-import Server from "@/components/Server";
+
 import Footer from "@/components/Footer";
 
 export default {
   components: {
     Header,
-    Input,
-    Server,
     Footer,
   },
 };
@@ -30,4 +27,9 @@ export default {
 
 
 <style>
+.main{
+  width: 100%;
+  min-height: 600px;
+background-color: #F2F2F2;
+}
 </style>
