@@ -139,6 +139,16 @@ export default {
       activePopular: true,
     };
   },
+  async fetch({ store }) {
+    if (store.getters["chosenProject/popularReaders"].length === 0) {
+      await store.dispatch("chosenProject/fetch");
+    }
+  },
+  computed: {
+    users() {
+      return this.$store.getters["chosenProject/popularReaders"];
+    },
+  },
   async mounted() {
     let responseProjects = await this.$axios.$get(
       "http://help.support.rusneb.dev.infospice.ru/api/kb.projects/"
